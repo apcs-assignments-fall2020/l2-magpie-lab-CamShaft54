@@ -30,7 +30,7 @@ public class Magpie
      */
     public String getResponse(String statement)
     {
-        String response = "";
+        String response;
         if (findWord(statement, "no") >= 0) {
             response = "Why so negative?";
         } else if (findWord(statement, "mother") >= 0 || findWord(statement, "father") >= 0 || findWord(statement, "brother") >= 0 || findWord(statement, "sister") >= 0) {
@@ -97,18 +97,8 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
-        str = str.trim().toLowerCase();
-        if (str.contains(word)) {
-            if (str.indexOf(word) >= 1 && str.length() == word.length() + 1 && str.charAt(0) != ' ') {
-                return -1;
-            } else if (str.length() > word.length() + str.indexOf(word) && str.charAt(word.length() + str.indexOf(word)) != ' ') {
-                return -1;
-            } else {
-                return str.indexOf(word);
-            }
-        } else {
-            return -1;
-        }
+        str = " " + str.trim().toLowerCase() + " ";
+        return (str.charAt(str.indexOf(word)-1) == ' ' && str.charAt(str.indexOf(word) + word.length()) == ' ') ? str.indexOf(word)-1 : -1;
     }
 
     
@@ -122,8 +112,7 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        //your code here
-        return "";
+        return (statement.startsWith("I want ")) ? statement.replace("I want ", "Would you really be happy if you had ") + "?" : statement;
     }
 
     /**
@@ -134,8 +123,7 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        //your code here
-        return "";
+        return statement.replace(" you", " me?").replace("I ", "Why do you ");
     }
 
     /**
@@ -147,7 +135,7 @@ public class Magpie
     public String transformIWantToStatement(String statement)
     {
         // your code here
-        return "";
+        return (statement.startsWith("I want to ")) ? statement.replace("I want to ", "What would it mean to ") + "?" : statement;
     }
 
 
@@ -161,7 +149,6 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        return (statement.contains("you ") && statement.endsWith(" me")) ? "What makes you think that I " + statement.substring(statement.indexOf("you ") + 4).replace(" me", " you?") : statement;
     }
 }
