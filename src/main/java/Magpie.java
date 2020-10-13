@@ -28,10 +28,17 @@ public class Magpie
      *            the user statement
      * @return a response based on the rules given
      */
-    public String getResponse(String statement)
-    {
+    public String getResponse(String statement) {
         String response;
-        if (findWord(statement, "no") >= 0) {
+        if (statement.contains("I want")) {
+            response = transformIWantStatement(statement);
+        } else if (statement.contains("I want to")) {
+            response = transformIWantToStatement(statement);
+        } else if (statement.contains(" you") && statement.contains("I ")) {
+            response = transformIYouStatement(statement);
+        } else if (statement.contains("I ") && statement.contains(" you")) {
+            response = transformYouMeStatement(statement);
+        } else if (findWord(statement, "no") >= 0) {
             response = "Why so negative?";
         } else if (findWord(statement, "mother") >= 0 || findWord(statement, "father") >= 0 || findWord(statement, "brother") >= 0 || findWord(statement, "sister") >= 0) {
             response = "Tell me more about your family.";
