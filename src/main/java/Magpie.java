@@ -105,7 +105,7 @@ public class Magpie
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
         str = " " + str.trim().toLowerCase() + " ";
-        return (str.contains(" " + word + " ")) ? str.indexOf(word) : -1;
+        return (str.contains(" " + word + " ")) ? str.indexOf(word)-1 : -1;
     }
 
     
