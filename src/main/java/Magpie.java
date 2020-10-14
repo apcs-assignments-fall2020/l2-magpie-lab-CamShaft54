@@ -30,13 +30,13 @@ public class Magpie
      */
     public String getResponse(String statement) {
         String response;
-        if (statement.contains("I want")) {
-            response = transformIWantStatement(statement);
-        } else if (statement.contains("I want to")) {
+        if (statement.contains("I want to ")) {
             response = transformIWantToStatement(statement);
+        } else if (statement.contains("I want ")) {
+            response = transformIWantStatement(statement);
         } else if (statement.contains(" you") && statement.contains("I ")) {
             response = transformIYouStatement(statement);
-        } else if (statement.contains("I ") && statement.contains(" you")) {
+        } else if (statement.contains("you ") && statement.contains(" me")) {
             response = transformYouMeStatement(statement);
         } else if (findWord(statement, "no") >= 0) {
             response = "Why so negative?";
@@ -66,7 +66,7 @@ public class Magpie
      */
     public String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 6;
+        final int NUMBER_OF_RESPONSES = 5;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
@@ -105,7 +105,7 @@ public class Magpie
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
         str = " " + str.trim().toLowerCase() + " ";
-        return (str.charAt(str.indexOf(word)-1) == ' ' && str.charAt(str.indexOf(word) + word.length()) == ' ') ? str.indexOf(word)-1 : -1;
+        return (str.contains(" " + word + " ")) ? str.indexOf(word) : -1;
     }
 
     
